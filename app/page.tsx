@@ -1,9 +1,16 @@
 import Image from 'next/image';
 
-export default function Home() {
+const Home = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <p>Initial</p>
+    <main className="flex-1 h-full bg-red-light rounded-[20px] flex justify-center items-center">
+      <Image
+        src="/girl-and-pet.png"
+        alt="Girl with pet"
+        width={700}
+        height={800}
+      />
     </main>
   );
-}
+};
+
+export default Home;
