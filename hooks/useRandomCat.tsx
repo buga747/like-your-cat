@@ -14,6 +14,7 @@ const useRandomCat = (request: string) => {
   useEffect(() => {
     const getCatData = async () => {
       try {
+        setLoading(true);
         const data = await catApi('images/search').json<CatData[]>();
         setCat(data[0]);
       } catch (error) {

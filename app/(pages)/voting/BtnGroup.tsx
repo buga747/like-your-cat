@@ -14,13 +14,7 @@ interface BtnGroupProps {
 }
 
 const BtnGroup = ({ imgId, setAction, setRequest }: BtnGroupProps) => {
-  const [favRequest, setFavRequest] = useState('');
-  const { favs } = useFavourites(TEMP_USER_ID, favRequest);
-
-  const [fav] = favs.filter(({ image }) => image.id === imgId);
-  const favId = fav ? fav.id : null;
-
-  const hahdleClick = (type: ActionType) => {
+  const handleClick = (type: ActionType) => {
     const date = new Date();
 
     const action: Action = {
@@ -35,7 +29,7 @@ const BtnGroup = ({ imgId, setAction, setRequest }: BtnGroupProps) => {
   const handleVote = async (value: number) => {
     try {
       await vote(imgId, value, TEMP_USER_ID);
-      hahdleClick(value === 1 ? 'Likes' : 'Dislikes');
+      handleClick(value === 1 ? 'Likes' : 'Dislikes');
       setRequest(crypto.randomUUID());
     } catch (error) {
       if (error instanceof Error) throw new Error(error.message);
@@ -44,15 +38,10 @@ const BtnGroup = ({ imgId, setAction, setRequest }: BtnGroupProps) => {
 
   const handleAddToFav = async () => {
     try {
-      if (favId) {
-        await removeFromFav(favId);
-        hahdleClick('FavRemove');
-      } else {
-        await addToFav(imgId, TEMP_USER_ID);
-        hahdleClick('FavAdd');
-      }
+      await addToFav(imgId, TEMP_USER_ID);
+      handleClick('FavAdd');
 
-      setFavRequest(crypto.randomUUID());
+      setRequest(crypto.randomUUID());
     } catch (error) {
       if (error instanceof Error) throw new Error(error.message);
     }
@@ -70,7 +59,7 @@ const BtnGroup = ({ imgId, setAction, setRequest }: BtnGroupProps) => {
         onClick={() => handleAddToFav()}
         className="w-20 h-20 text-white bg-red hover:text-red hover:bg-red/30 transition-all"
       >
-        <Icon icon={favId ? 'fav-color' : 'fav'} size={30} />
+        <Icon icon="fav" size={30} />
       </button>
       <button
         onClick={() => handleVote(-1)}

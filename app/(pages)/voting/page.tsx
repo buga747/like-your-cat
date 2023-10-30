@@ -3,7 +3,7 @@
 import BackNav from '@/components/BackNav';
 import useRandomCat from '@/hooks/useRandomCat';
 import ActionLogs from '../../../components/ActionLogs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import BtnGroup from './BtnGroup';
 import Loader from '@/components/Loader';
@@ -21,6 +21,10 @@ const Voting = () => {
   const [request, setRequest] = useState('');
   const { cat, loading, error } = useRandomCat(request);
 
+  useEffect(() => {
+    console.log(loading);
+  }, [request]);
+
   if (error) throw new Error('Failed to fetch data');
 
   return (
@@ -29,31 +33,29 @@ const Voting = () => {
         <BackNav pageTitle="voting" />
       </div>
       <div className="relative mb-14">
-        {loading ? (
-          <Loader />
-        ) : (
-          cat && (
-            <div>
-              <div className="relative overflow-hidden aspect-[1.8] rounded-[20px]">
-                <Image
-                  src={cat.url}
-                  fill
-                  alt="Cat"
-                  sizes="(max-width: 768px) 100%, 100%"
-                  priority
-                  className="object-cover"
-                />
-              </div>
-              <div className="absolute -bottom-[44px] left-2/4 -translate-x-1/2">
-                <BtnGroup
-                  imgId={cat.id}
-                  setAction={setAction}
-                  setRequest={setRequest}
-                />
-              </div>
-            </div>
-          )
-        )}
+        <div>
+          <div className="relative overflow-hidden aspect-[1.8] rounded-[20px]">
+            {loading ? (
+              <Loader />
+            ) : (
+              <Image
+                src={cat.url}
+                fill
+                alt="Cat"
+                sizes="(max-width: 768px) 100%, 100%"
+                priority
+                className="object-cover"
+              />
+            )}
+          </div>
+          <div className="absolute -bottom-[44px] left-2/4 -translate-x-1/2">
+            <BtnGroup
+              imgId={cat?.id}
+              setAction={setAction}
+              setRequest={setRequest}
+            />
+          </div>
+        </div>
       </div>
       <ActionLogs action={action} />
     </div>

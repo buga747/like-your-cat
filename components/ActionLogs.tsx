@@ -31,7 +31,7 @@ const ActionLogs = ({ action }: ActionLogsProps) => {
 
   return (
     !!actions.length && (
-      <div className="overflow-y-auto flex-1 flex flex-col gap-2.5">
+      <div className=" flex-1 flex flex-col gap-2.5">
         {actions.map(({ type, date, imgId }, index) => {
           const hours =
             date.getHours() > 9 ? date.getHours() : '0' + date.getHours();
