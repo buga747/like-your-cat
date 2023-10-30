@@ -38,22 +38,26 @@ const Voting = () => {
             {loading ? (
               <Loader />
             ) : (
-              <Image
-                src={cat.url}
-                fill
-                alt="Cat"
-                sizes="(max-width: 768px) 100%, 100%"
-                priority
-                className="object-cover"
-              />
+              cat && (
+                <Image
+                  src={cat.url}
+                  fill
+                  alt="Cat"
+                  sizes="(max-width: 768px) 100%, 100%"
+                  priority
+                  className="object-cover"
+                />
+              )
             )}
           </div>
           <div className="absolute -bottom-[44px] left-2/4 -translate-x-1/2">
-            <BtnGroup
-              imgId={cat?.id}
-              setAction={setAction}
-              setRequest={setRequest}
-            />
+            {cat && (
+              <BtnGroup
+                imgId={cat?.id}
+                setAction={setAction}
+                setRequest={setRequest}
+              />
+            )}
           </div>
         </div>
       </div>
